@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Source/">
+    <Project Path="src/Showcase.Examples/Showcase.Examples.csproj" />
+  </Folder>
+  <Folder Name="/Tests/Framework/">
+    <Project Path="tests/Goatly.Testing/Goatly.Testing.csproj" />
+    <Project Path="tests/Goatly.Testing.Tests/Goatly.Testing.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Tests/Examples/">
+    <Project Path="tests/Showcase.Examples.Tests/Showcase.Examples.Tests.csproj" />
+  </Folder>
+</Solution>
+
