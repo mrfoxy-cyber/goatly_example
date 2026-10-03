@@ -9,5 +9,10 @@
   <Folder Name="/Tests/Examples/">
     <Project Path="tests/Showcase.Examples.Tests/Showcase.Examples.Tests.csproj" />
   </Folder>
+  <Folder Name="/Tools/Use Cases/">
+    <Project Path="tools/Goatly.UseCases.Core/Goatly.UseCases.Core.csproj" />
+    <Project Path="tools/Goatly.UseCases.Generator/Goatly.UseCases.Generator.csproj" />
+    <Project Path="tools/Goatly.UseCases.Cli/Goatly.UseCases.Cli.csproj" />
+  </Folder>
 </Solution>
 

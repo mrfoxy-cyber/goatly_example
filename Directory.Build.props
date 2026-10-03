@@ -3,5 +3,15 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AnalysisLevel>latest</AnalysisLevel>
   </PropertyGroup>
+
+  <ItemGroup Condition="'$(EnableGoatlyUseCases)' == 'true'">
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)docs\use-cases\**\*.md" />
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)docs\testing\use-cases\**\*.md" />
+    <AdditionalFiles Include="$(MSBuildThisFileDirectory)docs\testing\criteria.lock"
+                     Condition="Exists('$(MSBuildThisFileDirectory)docs\testing\criteria.lock')" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)tools\Goatly.UseCases.Generator\Goatly.UseCases.Generator.csproj"
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="false" />
+  </ItemGroup>
 </Project>
 

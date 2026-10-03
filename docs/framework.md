@@ -1,8 +1,44 @@
 # Framework guide
 
-`Goatly.Testing` complements xUnit; it does not replace the test runner. xUnit
-still discovers and executes facts and theories. The framework records why each
-use-case test exists and how its cases were selected.
+The showcase has two connected parts:
+
+- `Goatly.UseCases` turns business UseCases into validated, typed test links.
+- `Goatly.Testing` records executable-test behavior and selection reasoning.
+
+Both complement xUnit; they do not replace the test runner. xUnit still
+discovers and executes facts and theories.
+
+## From UseCase to TestUse
+
+A business UseCase is the authoritative description of behavior. Its numbered
+acceptance criteria describe what must be true without prescribing a test
+implementation.
+
+A matching TestUse translates every criterion into an evidence plan. Its table
+states:
+
+- what cases, risks, boundaries, or states are selected;
+- which test type will provide the evidence;
+- which test-design technique selects the cases;
+- why that technique fits;
+- whether the evidence is implemented, planned, deferred, or manual.
+
+The parser requires a non-draft UseCase and TestUse to form a pair and requires
+their criterion IDs to match exactly.
+
+## Generated typed links
+
+When a test project sets `EnableGoatlyUseCases`, the source generator reads both
+document sets and creates types such as:
+
+```csharp
+Criteria.UC_PRICE_001
+Criteria.UC_PRICE_001.AC_001
+```
+
+Tests refer to those types rather than repeating IDs and criterion text as
+strings. `UseCaseAttribute` reads the generated UseCase ID. `CoversAttribute`
+reads the generated UseCase ID, criterion ID, and criterion text.
 
 ## Traceability chain
 
@@ -21,9 +57,34 @@ A complete linked test declares:
 - `Behavior`: the Given/When/Then meaning;
 - `UsesTestTechnique`: how cases were selected, including `what` and `why`.
 
-`TestCatalog.Discover` reads that metadata and reports missing, contradictory,
-or duplicate declarations. The showcase's `MetadataCatalogTests` acts as a
-guardrail over all example test containers.
+`TestCatalog.Discover` reads the runtime metadata and reports missing,
+contradictory, or duplicate declarations. The showcase's
+`MetadataCatalogTests` acts as a guardrail over all example test containers.
+
+The use-case CLI performs the cross-file collection. It scans typed `Covers`
+attributes and joins them back to the parsed UseCase and TestUse catalogue:
+
+```powershell
+.\goatly criterion UC-PRICE-001/AC-001
+```
+
+That output is the navigable chain from requirement to plan to executable test.
+
+## Revision and missing-coverage checks
+
+`docs/testing/criteria.lock` stores semantic fingerprints for reviewed UseCases
+and criteria. Formatting-only edits are ignored, while meaningful wording
+changes require the linked tests to be reviewed and the revision acknowledged.
+
+```powershell
+.\goatly changed
+.\goatly missing
+.\goatly check
+```
+
+`changed` finds reviewed definitions that changed. `missing` finds required
+criteria without a typed executable link. `check` combines document pairing,
+criterion parity, revision, and missing-link validation.
 
 ## Fixtures
 
